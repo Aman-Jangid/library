@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <title>Book-Library</title>
+  </head>
+  <body>
+    <div id="container">
+      <h1><span>your</span>BOOK-LIBRARY</h1>
+      <div class="app_container">
+        <div class="books_grid">
+          <ul class="books_list">
+            <li class="book">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover"
+              />
+            </li>
+            <li class="book">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover"
+              />
+            </li>
+            <li class="book">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover"
+              />
+            </li>
+            <li class="book">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover"
+              />
+            </li>
+            <li class="book">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover"
+              />
+            </li>
+            <li class="book">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover"
+              />
+            </li>
+            <!-- <li class="book">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover"
+              />
+            </li>
+            <li class="book">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover"
+              />
+            </li>
+            <li class="book">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover"
+              />
+            </li>
+            <li class="book">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover"
+              />
+            </li> -->
+          </ul>
+        </div>
+        <div class="preview_panel existing">
+          <div class="preview_container">
+            <div class="coverArt_container">
+              <img
+                class="brace"
+                src="images/left_brace.webp"
+                alt="left_brace"
+              />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
+                alt="book cover art"
+                class="cover_art"
+              />
+              <img
+                class="brace"
+                src="images/right_brace.webp"
+                alt="right_brace"
+              />
+            </div>
+            <div class="book_info">
+              <span class="info_field book_title"
+                >Title : <span>One Piece</span></span
+              >
+              <span class="info_field book_author"
+                >Author : <span>Eiichiro Oda</span></span
+              >
+              <span class="info_field book_length"
+                >Length : <span>1080 Chapters</span></span
+              >
+              <span class="info_field book_release"
+                >Published in : <span>1998</span></span
+              >
+              <span class="info_field book_rating"
+                >Rating : <span>★ ★ ★ ★ ★</span></span
+              >
+              <span>STATUS</span>
+              <div class="book_read_status">
+                <button id="completed">Completed</button>
+                <button id="reading">Reading</button>
+                <button id="wantToRead">Want to read</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="preview_panel new">
+          <div class="bookArt_container"></div>
+          <span class="book_title">One Piece</span>
+          <span class="book_author">Eiichiro Oda</span>
+          <span class="book_length">1080 Chapters</span>
+          <span class="book_rating">★ ★ ★ ★ ★</span>
+          <div class="book_read_status">
+            <input
+              title="completed"
+              type="radio"
+              name="book_completed"
+              id="completed"
+            />
+            <input
+              title="dropped"
+              type="radio"
+              name="book_dropped"
+              id="dropped"
+            />
+            <input
+              title="want_to_read"
+              type="radio"
+              name="book_wantToRead"
+              id="wantToRead"
+            />
+          </div>
+          <div class="finalize_buttons">
+            <button id="addBook">Add</button>
+            <button id="clearFields">Clear</button>
+            <button id="cancel">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
