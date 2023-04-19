@@ -35,8 +35,6 @@ statusBtns.forEach((statusBtn) =>
   })
 );
 
-statusBtns[newStatus - 1].style.cssText = 'color:red;';
-
 let index = 0;
 
 // BOOK OBJECT CONSTRUCTOR
@@ -87,7 +85,7 @@ const books = [
     ['Adventure', 'High-Fantasy', 'Novel', 'Fiction']
   ),
 ];
-let rating = '';
+let rating = '★ ★ ★ ★ ★';
 
 // BOOK PREVIEW HTML
 function previewBook(book) {
@@ -121,7 +119,7 @@ function previewBook(book) {
                   >Published in : <span>${book.publishDate}</span></span>
                 <span class="info_field book_rating"
                   >Rating : <span>${rating}</span></span>
-                <span>STATUS</span>
+                <span id='statusSpan'>STATUS</span>
                 <div class="book_read_status">
                   <button id="completed" class="${
                     book.status === 1 ? 'active' : ''
@@ -134,7 +132,7 @@ function previewBook(book) {
                     book.status === 3 ? 'active' : ''
                   }">Want to read</button>
                 </div>
-                <span>TAGS</span>
+                <span id='tagsSpan'>TAGS</span>
                 <div class="book_tags">
                   ${book.tags
                     .map((tag) => `<span class='book_tag'>${tag}</span>`)
