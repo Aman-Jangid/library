@@ -23,6 +23,7 @@ const statusBtns = addBookPanelEl.querySelectorAll('.get_status');
 // INITIAL VALUES
 let newStatus = 2;
 
+// ADD BOOK ELEMENT HTML
 const bookAdderEl = `<li class="book addnew">
 <span>⊕</span>
 <img src="images/AddNew.jpg" alt="add new book" />
@@ -36,8 +37,9 @@ statusBtns.forEach((statusBtn) =>
 
 statusBtns[newStatus - 1].style.cssText = 'color:red;';
 
-let index = 1;
+let index = 0;
 
+// BOOK OBJECT CONSTRUCTOR
 function Book(
   index,
   imageUrl,
@@ -60,6 +62,7 @@ function Book(
   this.tags = tags;
 }
 
+// Books array contains all book objects
 const books = [
   new Book(
     0,
@@ -84,59 +87,114 @@ const books = [
     ['Adventure', 'High-Fantasy', 'Novel', 'Fiction']
   ),
 ];
+let rating = '';
+
+// BOOK PREVIEW HTML
+function previewBook(book) {
+  const appendBookInfo = `
+  <div class="preview_container">
+              <div class="coverArt_container">
+                <img
+                  class="brace"
+                  src="images/left_brace.webp"
+                  alt="left_brace"
+                />
+                <img
+                  src="${book.imageUrl}"
+                  alt="book cover art"
+                  class="cover_art"
+                />
+                <img
+                  class="brace"
+                  src="images/right_brace.webp"
+                  alt="right_brace"
+                />
+              </div>
+              <div class="book_info">
+                <span class="info_field book_title"
+                  >Title : <span>${book.title}</span></span>
+                <span class="info_field book_author"
+                  >Author : <span>${book.author}</span></span>
+                <span class="info_field book_length"
+                  >Length : <span>${book.length}</span></span>
+                <span class="info_field book_release"
+                  >Published in : <span>${book.publishDate}</span></span>
+                <span class="info_field book_rating"
+                  >Rating : <span>${rating}</span></span>
+                <span>STATUS</span>
+                <div class="book_read_status">
+                  <button id="completed" class="${
+                    book.status === 1 ? 'active' : ''
+                  }">Completed</button>
+                  <button id="reading" class="${
+                    book.status === 2 ? 'active' : ''
+                  }">Reading</button>
+                  <button id="wantToRead" 
+                  class="${
+                    book.status === 3 ? 'active' : ''
+                  }">Want to read</button>
+                </div>
+                <span>TAGS</span>
+                <div class="book_tags">
+                  ${book.tags
+                    .map((tag) => `<span class='book_tag'>${tag}</span>`)
+                    .join('')}
+                </div>
+              </div>
+            </div>
+  `;
+
+  previewPanelEl.innerHTML = appendBookInfo;
+}
 
 //TO RENDER ALREADY EXISTING BOOKS
 function renderBooks(books) {
   books.forEach((book, i) => {
     const bookEl = `<li class="book existing" data-index="${i}">
-          <img
-            src="${book.imageUrl}"
-            alt="${book.title} coverArt"
-          />
-        </li>
-          `;
+            <img
+              src="${book.imageUrl}"
+              alt="${book.title} coverArt"
+            />
+          </li>
+            `;
     bookListEl.innerHTML += bookEl;
   });
 }
 
-// RENDERS EXISTING BOOKS
-renderBooks(books);
-bookListEl.innerHTML += bookAdderEl;
+// TOGGLE B/W ADD_BOOK AND SEE_INFO MODE
+function ToggleModes(newBooks) {
+  const bookAddEl = bookListEl.querySelector('.book.addnew');
+  const booksEl = bookListEl.querySelectorAll('.book.existing');
+  bookAddEl.addEventListener('click', () => showAddBookPanel());
+
+  booksEl.forEach((book) =>
+    book.addEventListener('click', () => {
+      if (addBookPanelEl.classList.contains('show')) {
+        addBookPanelEl.classList.remove('show');
+        addBookPanelEl.classList.add('hidden');
+      }
+      if (previewPanelEl.classList.contains('hidden')) {
+        previewPanelEl.classList.remove('hidden');
+        previewPanelEl.classList.add('show');
+      }
+
+      previewPanelEl.innerHTML = '';
+      rating = '';
+      index = book.getAttribute('data-index');
+      console.log(index);
+      for (let i = 0; i < newBooks[index].rating; i++) {
+        rating += ' ★ ';
+      }
+      console.log(newBooks);
+      previewBook(newBooks[book.getAttribute('data-index')]);
+    })
+  );
+}
+
+previewBook(books[index]);
 
 // GETS CALLED WHEN ADD-BOOK IS CLICKED ON..
-addBookBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-
-  const tagsArr = [bookTagsInput.value.split(',')];
-
-  //  pushing new book object to the books array
-  books.push(
-    new Book(
-      books.length,
-      imageInput.value,
-      bookTitleInput.value,
-      bookAuthorInput.value,
-      bookLengthInput.value,
-      parseInt(bookPublishDateInput.value),
-      parseInt(bookRatingInput.value),
-      parseInt(newStatus),
-      tagsArr
-    )
-  );
-
-  //  empties the array
-  bookListEl.innerHTML = '';
-  //   RENDER THE MODIFIED BOOKS ARRAY
-  renderBooks(books);
-  bookListEl.innerHTML += bookAdderEl;
-});
-
-const bookAddEl = bookListEl.querySelector('.book.addnew');
-const booksEl = bookListEl.querySelectorAll('.book.existing');
-
-let rating = '';
-
-bookAddEl.addEventListener('click', () => {
+function showAddBookPanel() {
   if (previewPanelEl.classList.contains('show')) {
     previewPanelEl.classList.remove('show');
     previewPanelEl.classList.add('hidden');
@@ -145,88 +203,40 @@ bookAddEl.addEventListener('click', () => {
     addBookPanelEl.classList.remove('hidden');
     addBookPanelEl.classList.add('show');
   }
-});
 
-booksEl.forEach((book) =>
-  book.addEventListener('click', () => {
-    if (addBookPanelEl.classList.contains('show')) {
-      addBookPanelEl.classList.remove('show');
-      addBookPanelEl.classList.add('hidden');
-    }
-    if (previewPanelEl.classList.contains('hidden')) {
-      previewPanelEl.classList.remove('hidden');
-      previewPanelEl.classList.add('show');
-    }
+  addBookBtn.addEventListener('click', (e) => {
+    e.preventDefault();
 
-    previewPanelEl.innerHTML = '';
-    rating = '';
-    index = book.getAttribute('data-index');
+    const tagsArr = [];
+    tagsArr.push(...bookTagsInput.value.split(','));
+    //  pushing new book object to the books array
+    books.push(
+      new Book(
+        books.length,
+        imageInput.value,
+        bookTitleInput.value,
+        bookAuthorInput.value,
+        bookLengthInput.value,
+        parseInt(bookPublishDateInput.value),
+        parseInt(bookRatingInput.value),
+        parseInt(newStatus),
+        tagsArr
+      )
+    );
 
-    for (let i = 0; i < books[index].rating; i++) {
-      rating += ' ★ ';
-    }
-
-    previewBook(books[book.getAttribute('data-index')]);
-  })
-);
-
-let statusOf = 'hobbit';
-
-function previewBook(book) {
-  const appendBookInfo = `
-<div class="preview_container">
-            <div class="coverArt_container">
-              <img
-                class="brace"
-                src="images/left_brace.webp"
-                alt="left_brace"
-              />
-              <img
-                src="${book.imageUrl}"
-                alt="book cover art"
-                class="cover_art"
-              />
-              <img
-                class="brace"
-                src="images/right_brace.webp"
-                alt="right_brace"
-              />
-            </div>
-            <div class="book_info">
-              <span class="info_field book_title"
-                >Title : <span>${book.title}</span></span>
-              <span class="info_field book_author"
-                >Author : <span>${book.author}</span></span>
-              <span class="info_field book_length"
-                >Length : <span>${book.length}</span></span>
-              <span class="info_field book_release"
-                >Published in : <span>${book.publishDate}</span></span>
-              <span class="info_field book_rating"
-                >Rating : <span>${rating}</span></span>
-              <span>STATUS</span>
-              <div class="book_read_status">
-                <button id="completed" class="${
-                  book.status === 1 ? 'active' : ''
-                }">Completed</button>
-                <button id="reading" class="${
-                  book.status === 2 ? 'active' : ''
-                }">Reading</button>
-                <button id="wantToRead" 
-                class="${
-                  book.status === 3 ? 'active' : ''
-                }">Want to read</button>
-              </div>
-              <span>TAGS</span>
-              <div class="book_tags">
-                ${book.tags
-                  .map((tag) => `<span class='book_tag'>${tag}</span>`)
-                  .join('')}
-              </div>
-            </div>
-          </div>
-`;
-
-  previewPanelEl.innerHTML = appendBookInfo;
+    //  empties the array
+    bookListEl.innerHTML = '';
+    //   RENDER THE MODIFIED BOOKS ARRAY
+    renderBooks(books);
+    bookListEl.innerHTML += bookAdderEl;
+    ToggleModes(books);
+  });
 }
 
-previewBook(books[index]);
+// 1.render initial books array
+// RENDERS EXISTING BOOKS
+renderBooks(books);
+console.log('downtown');
+bookListEl.innerHTML += bookAdderEl;
+// 2.listen for click on a book or Add_book element
+ToggleModes(books);
