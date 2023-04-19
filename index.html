@@ -14,103 +14,29 @@
       <div class="app_container">
         <div class="books_grid">
           <ul class="books_list">
-            <li class="book">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
-                alt="book cover"
-              />
-            </li>
-            <li class="book">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
-                alt="book cover"
-              />
-            </li>
-            <li class="book">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
-                alt="book cover"
-              />
-            </li>
-            <li class="book">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
-                alt="book cover"
-              />
-            </li>
-            <li class="book">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
-                alt="book cover"
-              />
-            </li>
-            <li class="book">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
-                alt="book cover"
-              />
-            </li>
+            <!-- <li class="book addnew">
+              <span>⊕</span>
+              <img src="images/AddNew.jpg" alt="add new book" />
+            </li> -->
           </ul>
         </div>
-        <div class="preview_panel see_existing show">
-          <div class="preview_container">
-            <div class="coverArt_container">
-              <img
-                class="brace"
-                src="images/left_brace.webp"
-                alt="left_brace"
-              />
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg"
-                alt="book cover art"
-                class="cover_art"
-              />
-              <img
-                class="brace"
-                src="images/right_brace.webp"
-                alt="right_brace"
-              />
-            </div>
-            <div class="book_info">
-              <span class="info_field book_title"
-                >Title : <span>One Piece</span></span
-              >
-              <span class="info_field book_author"
-                >Author : <span>Eiichiro Oda</span></span
-              >
-              <span class="info_field book_length"
-                >Length : <span>1080 Chapters</span></span
-              >
-              <span class="info_field book_release"
-                >Published in : <span>1998</span></span
-              >
-              <span class="info_field book_rating"
-                >Rating : <span>★ ★ ★ ★ ★</span></span
-              >
-              <span>STATUS</span>
-              <div class="book_read_status">
-                <button id="completed">Completed</button>
-                <button id="reading">Reading</button>
-                <button id="wantToRead">Want to read</button>
-              </div>
-              <span>TAGS</span>
-              <div class="book_tags">
-                <span class="book_tag">Adventure</span>
-                <span class="book_tag">Fantasy</span>
-                <span class="book_tag">Comedy</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="preview_panel add_new hidden">
+        <div class="preview_panel see_existing show"></div>
+        <form class="preview_panel add_new hidden">
           <div class="bookArt_container">
             <label for="image_url" class="show">Enter Image Url</label>
-            <input type="text" title="image_url" id="image_url" class="show" />
+            <input
+              required
+              type="text"
+              title="image_url"
+              id="image_url"
+              class="get_imageUrl show"
+            />
             <button title="addImage" class="show">Add image</button>
-            <img src="" alt="" class="hidden" />
+            <img src="" alt="" class="hidden cover_art" />
           </div>
           <label for="get_bookTitle">Title</label>
           <input
+            required
             type="text"
             title="book_title"
             class="bookInfo"
@@ -118,6 +44,7 @@
           />
           <label for="get_bookAuthor">Author</label>
           <input
+            required
             type="text"
             title="book_author"
             class="bookInfo"
@@ -125,6 +52,7 @@
           />
           <label for="get_bookLength">Length (pages or chapters)</label>
           <input
+            required
             type="text"
             title="book_length"
             class="bookInfo"
@@ -132,6 +60,7 @@
           />
           <label for="get_bookPublishDate">Published on</label>
           <input
+            required
             type="text"
             title="book_publish_date"
             class="bookInfo"
@@ -139,15 +68,20 @@
           />
           <label for="get_bookRating">Rating</label>
           <input
+            required
             type="text"
             title="book_rating"
             class="bookInfo"
             id="get_bookRating"
           />
           <div class="book_read_status">
-            <button id="get_completed" value="1">Completed</button>
-            <button id="get_reading" value="2">Reading</button>
-            <button id="get_wantToRead" value="3">Want to read</button>
+            <button type="button" class="get_status" value="1">
+              Completed
+            </button>
+            <button type="button" class="get_status" value="2">Reading</button>
+            <button type="button" class="get_status" value="3">
+              Want to read
+            </button>
           </div>
           <div class="getTags">
             <label for="get_bookTags"></label>
@@ -156,15 +90,21 @@
               id="get_bookTags"
               cols="30"
               rows="5"
-              placeholder="Enter tags Separated by commas ','"
+              style="
+                max-width: 350px;
+                max-height: 100px;
+                min-height: 30px;
+                min-width: 230px;
+              "
+              placeholder="tags Separated by commas ','"
             ></textarea>
           </div>
           <div class="finalize_buttons">
-            <button id="addBook">Add</button>
-            <button id="clearFields">Clear</button>
-            <button id="cancel">Cancel</button>
+            <button type="submit" id="addBook">Add</button>
+            <button type="reset" id="clearFields">Clear</button>
+            <button type="button" id="cancel">Cancel</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </body>
