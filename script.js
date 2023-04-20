@@ -120,6 +120,7 @@ let books = [
 ];
 books = JSON.parse(localStorage.getItem('booksLS'));
 
+// initial rating for 0th indexed object
 let rating = '★ ★ ★ ★ ★';
 
 // BOOK PREVIEW HTML
@@ -187,6 +188,12 @@ function renderBooks(booksInitial) {
 
   booksInitial.forEach((book, i) => {
     const bookEl = `<li class="book existing" data-index="${i}">
+      <div class="bookButtons">
+      <button type='button' class="deleteBook_btn" id="deleteBook"><img style='border:none;' src='images/trash.svg'/></button>
+      <button type='button' class="toggleRead_btn">${
+        book.status === 2 ? '🟩' : '🟥'
+      }</button>
+      </div>
             <img
               src="${book.imageUrl}"
               alt="${book.title} coverArt"
@@ -279,6 +286,9 @@ if (JSON.parse(localStorage.getItem('booksLS')).length === books.length) {
 }
 bookListEl.innerHTML += bookAdderEl;
 // 2.listen for click on a book or Add_book element
-// if localStorage already has the initial book array
-// ToggleModes(books);
 ToggleModes(JSON.parse(localStorage.getItem('booksLS')));
+
+// BookDelete Button
+const bookDeleteBtn = document.getElementById('deleteBook');
+
+console.log(bookDeleteBtn);
