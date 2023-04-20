@@ -277,8 +277,22 @@ textarea {
   border: none;
   border-radius: 5px;
   padding: 4px 5px;
+  border: 1px solid transparent;
   background-color: #b997fdaf;
+  cursor: pointer;
   color: var(--color-font-primary);
   font-weight: bold;
   font-size: 85%;
+  transition: all 0.3s;
+}
+
+.preview_panel.add_new.show button:hover,
+.preview_panel.add_new.show button:focus {
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.2);
+}
+
+.preview_panel.add_new.show button.active {
+  background-color: var(--color-secondary);
+  border: 1px solid var(--color-font-primary);
 }

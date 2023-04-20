@@ -60,6 +60,35 @@ function Book(
   this.tags = tags;
 }
 
+let initBooks = [
+  new Book(
+    0,
+    'https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg',
+    'One piece',
+    'Eiichiro Oda',
+    '1080 Chapters',
+    1998,
+    5,
+    2,
+    ['Action', 'Adventure', 'Fiction', 'Comedy']
+  ),
+  new Book(
+    1,
+    'https://m.media-amazon.com/images/I/A1E+USP9f8L.jpg',
+    'The Hobbit',
+    'J.R.R Tolkien',
+    '300 Pages',
+    1937,
+    4,
+    3,
+    ['Adventure', 'High-Fantasy', 'Novel', 'Fiction']
+  ),
+];
+
+if (!localStorage.getItem('booksLS')) {
+  localStorage.setItem('booksLS', JSON.stringify(initBooks));
+}
+
 // Books array contains all book objects
 let books = [
   // new Book(
