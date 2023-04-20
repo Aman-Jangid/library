@@ -61,30 +61,32 @@ function Book(
 }
 
 // Books array contains all book objects
-const books = [
-  new Book(
-    0,
-    'https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg',
-    'One piece',
-    'Eiichiro Oda',
-    '1080 Chapters',
-    1998,
-    5,
-    2,
-    ['Action', 'Adventure', 'Fiction', 'Comedy']
-  ),
-  new Book(
-    1,
-    'https://m.media-amazon.com/images/I/A1E+USP9f8L.jpg',
-    'The Hobbit',
-    'J.R.R Tolkien',
-    '300 Pages',
-    1937,
-    4,
-    3,
-    ['Adventure', 'High-Fantasy', 'Novel', 'Fiction']
-  ),
+let books = [
+  // new Book(
+  //   0,
+  //   'https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg',
+  //   'One piece',
+  //   'Eiichiro Oda',
+  //   '1080 Chapters',
+  //   1998,
+  //   5,
+  //   2,
+  //   ['Action', 'Adventure', 'Fiction', 'Comedy']
+  // ),
+  // new Book(
+  //   1,
+  //   'https://m.media-amazon.com/images/I/A1E+USP9f8L.jpg',
+  //   'The Hobbit',
+  //   'J.R.R Tolkien',
+  //   '300 Pages',
+  //   1937,
+  //   4,
+  //   3,
+  //   ['Adventure', 'High-Fantasy', 'Novel', 'Fiction']
+  // ),
 ];
+books = JSON.parse(localStorage.getItem('booksLS'));
+
 let rating = '★ ★ ★ ★ ★';
 
 // BOOK PREVIEW HTML
@@ -146,8 +148,11 @@ function previewBook(book) {
 }
 
 //TO RENDER ALREADY EXISTING BOOKS
-function renderBooks(books) {
-  books.forEach((book, i) => {
+function renderBooks(booksInitial) {
+  // Storing initial books array to the localStorage
+  localStorage.setItem('booksLS', JSON.stringify(booksInitial));
+
+  booksInitial.forEach((book, i) => {
     const bookEl = `<li class="book existing" data-index="${i}">
             <img
               src="${book.imageUrl}"
@@ -160,7 +165,7 @@ function renderBooks(books) {
 }
 
 // TOGGLE B/W ADD_BOOK AND SEE_INFO MODE
-function ToggleModes(newBooks) {
+function ToggleModes(booksNew) {
   const bookAddEl = bookListEl.querySelector('.book.addnew');
   const booksEl = bookListEl.querySelectorAll('.book.existing');
   bookAddEl.addEventListener('click', () => showAddBookPanel());
@@ -179,12 +184,10 @@ function ToggleModes(newBooks) {
       previewPanelEl.innerHTML = '';
       rating = '';
       index = book.getAttribute('data-index');
-      console.log(index);
-      for (let i = 0; i < newBooks[index].rating; i++) {
+      for (let i = 0; i < booksNew[index].rating; i++) {
         rating += ' ★ ';
       }
-      console.log(newBooks);
-      previewBook(newBooks[book.getAttribute('data-index')]);
+      previewBook(booksNew[book.getAttribute('data-index')]);
     })
   );
 }
@@ -208,6 +211,7 @@ function showAddBookPanel() {
     const tagsArr = [];
     tagsArr.push(...bookTagsInput.value.split(','));
     //  pushing new book object to the books array
+
     books.push(
       new Book(
         books.length,
@@ -222,19 +226,26 @@ function showAddBookPanel() {
       )
     );
 
+    console.log(books);
+    localStorage.setItem('booksLS', JSON.stringify(books));
+
     //  empties the array
     bookListEl.innerHTML = '';
     //   RENDER THE MODIFIED BOOKS ARRAY
-    renderBooks(books);
+    renderBooks(JSON.parse(localStorage.getItem('booksLS')));
     bookListEl.innerHTML += bookAdderEl;
-    ToggleModes(books);
+    ToggleModes(JSON.parse(localStorage.getItem('booksLS')));
   });
 }
-
 // 1.render initial books array
 // RENDERS EXISTING BOOKS
-renderBooks(books);
-console.log('downtown');
+if (JSON.parse(localStorage.getItem('booksLS')).length === books.length) {
+  renderBooks(books);
+} else {
+  renderBooks(JSON.parse(localStorage.getItem('booksLS')));
+}
 bookListEl.innerHTML += bookAdderEl;
 // 2.listen for click on a book or Add_book element
-ToggleModes(books);
+// if localStorage already has the initial book array
+// ToggleModes(books);
+ToggleModes(JSON.parse(localStorage.getItem('booksLS')));
