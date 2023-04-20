@@ -67,7 +67,7 @@ function Book(
 let initBooks = [
   new Book(
     0,
-    'https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg',
+    'https://static.wikia.nocookie.net/onepiece/images/3/3b/Volume_90.png/revision/latest?cb=20190521080720',
     'One piece',
     'Eiichiro Oda',
     '1080 Chapters',
@@ -94,30 +94,7 @@ if (!localStorage.getItem('booksLS')) {
 }
 
 // Books array contains all book objects
-let books = [
-  // new Book(
-  //   0,
-  //   'https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg',
-  //   'One piece',
-  //   'Eiichiro Oda',
-  //   '1080 Chapters',
-  //   1998,
-  //   5,
-  //   2,
-  //   ['Action', 'Adventure', 'Fiction', 'Comedy']
-  // ),
-  // new Book(
-  //   1,
-  //   'https://m.media-amazon.com/images/I/A1E+USP9f8L.jpg',
-  //   'The Hobbit',
-  //   'J.R.R Tolkien',
-  //   '300 Pages',
-  //   1937,
-  //   4,
-  //   3,
-  //   ['Adventure', 'High-Fantasy', 'Novel', 'Fiction']
-  // ),
-];
+let books = [];
 books = JSON.parse(localStorage.getItem('booksLS'));
 
 // initial rating for 0th indexed object
@@ -181,15 +158,36 @@ function previewBook(book) {
   previewPanelEl.innerHTML = appendBookInfo;
 }
 
+function deleteBook() {
+  let newArr = JSON.parse(localStorage.getItem('booksLS')).filter(
+    (book) => book.index !== parseInt(this.getAttribute('data-index'))
+  );
+
+  localStorage.setItem('booksLS', JSON.stringify(newArr));
+  renderBooks(newArr);
+  ToggleModes(newArr);
+}
+
+function handleBookDeletion(bookDeleteBtns) {
+  //Event listener for deleteBook button
+  bookDeleteBtns.forEach((deleteBtn) => {
+    deleteBtn.addEventListener('click', deleteBook);
+  });
+}
+
 //TO RENDER ALREADY EXISTING BOOKS
 function renderBooks(booksInitial) {
+  // emptying list of books before replacing with new list
+  bookListEl.innerHTML = ``;
   // Storing initial books array to the localStorage
   localStorage.setItem('booksLS', JSON.stringify(booksInitial));
 
   booksInitial.forEach((book, i) => {
     const bookEl = `<li class="book existing" data-index="${i}">
       <div class="bookButtons">
-      <button type='button' class="deleteBook_btn" id="deleteBook"><img style='border:none;' src='images/trash.svg'/></button>
+      <button type='button' data-index='${
+        book.index
+      }'  class="deleteBook_btn" id="deleteBook"><img style='border:none;' src='images/trash.svg'/></button>
       <button type='button' class="toggleRead_btn">${
         book.status === 2 ? '🟩' : '🟥'
       }</button>
@@ -200,8 +198,15 @@ function renderBooks(booksInitial) {
             />
           </li>
             `;
+    console.log(bookEl);
     bookListEl.innerHTML += bookEl;
   });
+
+  bookListEl.innerHTML += bookAdderEl;
+  previewBook(books[index]);
+
+  let bookDeleteBtns = document.querySelectorAll('.deleteBook_btn');
+  handleBookDeletion(bookDeleteBtns);
 }
 
 // TOGGLE B/W ADD_BOOK AND SEE_INFO MODE
@@ -231,8 +236,6 @@ function ToggleModes(booksNew) {
     })
   );
 }
-
-previewBook(books[index]);
 
 // GETS CALLED WHEN ADD-BOOK IS CLICKED ON..
 function showAddBookPanel() {
@@ -266,14 +269,13 @@ function showAddBookPanel() {
       )
     );
 
-    console.log(books);
     localStorage.setItem('booksLS', JSON.stringify(books));
 
     //  empties the array
     bookListEl.innerHTML = '';
     //   RENDER THE MODIFIED BOOKS ARRAY
     renderBooks(JSON.parse(localStorage.getItem('booksLS')));
-    bookListEl.innerHTML += bookAdderEl;
+    // bookListEl.innerHTML += bookAdderEl;
     ToggleModes(JSON.parse(localStorage.getItem('booksLS')));
   });
 }
@@ -284,11 +286,9 @@ if (JSON.parse(localStorage.getItem('booksLS')).length === books.length) {
 } else {
   renderBooks(JSON.parse(localStorage.getItem('booksLS')));
 }
-bookListEl.innerHTML += bookAdderEl;
 // 2.listen for click on a book or Add_book element
-ToggleModes(JSON.parse(localStorage.getItem('booksLS')));
 
 // BookDelete Button
-const bookDeleteBtn = document.getElementById('deleteBook');
+const bookDeleteBtns = document.querySelectorAll('.deleteBook_btn');
 
-console.log(bookDeleteBtn);
+ToggleModes(JSON.parse(localStorage.getItem('booksLS')));
