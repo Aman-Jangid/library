@@ -31,7 +31,11 @@ const bookAdderEl = `<li class="book addnew">
 
 statusBtns.forEach((statusBtn) =>
   statusBtn.addEventListener('click', () => {
-    newStatus = statusBtn.value;
+    // remove active class from all buttons
+    statusBtns.forEach((statusBtn) => {
+      statusBtn.classList.remove('active');
+    });
+    statusBtn.classList.add('active');
   })
 );
 
