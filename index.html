@@ -18,7 +18,9 @@
         <div class="preview_panel see_existing show"></div>
         <form class="preview_panel add_new hidden">
           <div class="bookArt_container">
-            <label for="image_url" class="show">Enter Image Url</label>
+            <label for="image_url" class="coverArt_label show"
+              >Enter Image Url</label
+            >
             <input
               required
               type="text"
@@ -26,8 +28,13 @@
               id="image_url"
               class="get_imageUrl show"
             />
-            <button title="addImage" class="show">Add image</button>
-            <img src="" alt="" class="hidden cover_art" />
+            <button type="button" title="addImage" class="addImage_btn show">
+              Add image
+            </button>
+            <div class="imagePreview_container" style="position: relative">
+              <span class="remove_image">🔴</span
+              ><img src="" alt="" width="120px" class="cover_art" />
+            </div>
           </div>
           <label for="get_bookTitle">Title</label>
           <input
@@ -97,7 +104,7 @@
           <div class="finalize_buttons">
             <button type="submit" id="addBook">Add</button>
             <button type="reset" id="clearFields">Clear</button>
-            <button type="button" id="cancel">Cancel</button>
+            <!-- <button type="button" id="cancel">Cancel</button> -->
           </div>
         </form>
       </div>

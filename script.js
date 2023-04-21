@@ -148,7 +148,7 @@ function previewBook(book) {
                 <span id='tagsSpan'>TAGS</span>
                 <div class="book_tags">
                   ${book.tags
-                    .map((tag) => `<span class='book_tag'>${tag}</span>`)
+                    .map((tag) => `<span class='book_tag'>${tag.trim()}</span>`)
                     .join('')}
                 </div>
               </div>
@@ -198,7 +198,6 @@ function renderBooks(booksInitial) {
             />
           </li>
             `;
-    console.log(bookEl);
     bookListEl.innerHTML += bookEl;
   });
 
@@ -239,6 +238,13 @@ function ToggleModes(booksNew) {
 
 // GETS CALLED WHEN ADD-BOOK IS CLICKED ON..
 function showAddBookPanel() {
+  // ADD IMAGE BUTTON AND INPUT
+  const addImageBtn = addBookPanelEl.querySelector('.addImage_btn');
+  const imageUrlInput = addBookPanelEl.querySelector('#image_url');
+  const hiddenCoverArt = addBookPanelEl.querySelector('.cover_art');
+  const coverArt_label = addBookPanelEl.querySelector('.coverArt_label');
+  // const removeImageBtn = addBookPanelEl.querySelector('.remove_image');
+
   if (previewPanelEl.classList.contains('show')) {
     previewPanelEl.classList.remove('show');
     previewPanelEl.classList.add('hidden');
@@ -247,6 +253,16 @@ function showAddBookPanel() {
     addBookPanelEl.classList.remove('hidden');
     addBookPanelEl.classList.add('show');
   }
+
+  // show image preview when add image is clicked
+  addImageBtn.addEventListener('click', () => {
+    hiddenCoverArt.setAttribute('src', imageUrlInput.value);
+    imageUrlInput.classList.toggle('show');
+    hiddenCoverArt.classList.toggle('show');
+    addImageBtn.classList.toggle('show');
+    coverArt_label.classList.toggle('show');
+    // removeImageBtn.classList.toggle('show');
+  });
 
   addBookBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -268,6 +284,12 @@ function showAddBookPanel() {
         tagsArr
       )
     );
+
+    hiddenCoverArt.setAttribute('src', '');
+    imageUrlInput.classList.toggle('show');
+    hiddenCoverArt.classList.toggle('show');
+    addImageBtn.classList.toggle('show');
+    coverArt_label.classList.toggle('show');
 
     localStorage.setItem('booksLS', JSON.stringify(books));
 
