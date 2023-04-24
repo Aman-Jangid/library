@@ -41,28 +41,53 @@ statusBtns.forEach((statusBtn) =>
 
 let index = 0;
 
-// BOOK OBJECT CONSTRUCTOR
-function Book(
-  index,
-  imageUrl,
-  title,
-  author,
-  length,
-  publishDate,
-  rating,
-  status,
-  tags
-) {
-  this.index = index;
-  this.imageUrl = imageUrl;
-  this.title = title;
-  this.author = author;
-  this.length = length;
-  this.publishDate = publishDate;
-  this.rating = rating;
-  this.status = status;
-  this.tags = tags;
+//
+class Book {
+  constructor(
+    index,
+    imageUrl,
+    title,
+    author,
+    length,
+    publishDate,
+    rating,
+    status,
+    tags
+  ) {
+    this.index = index;
+    this.imageUrl = imageUrl;
+    this.title = title;
+    this.author = author;
+    this.length = length;
+    this.publishDate = publishDate;
+    this.rating = rating;
+    this.status = status;
+    this.tags = tags;
+  }
 }
+
+// BOOK OBJECT CONSTRUCTOR
+// function Book(
+//   index,
+//   imageUrl,
+//   title,
+//   author,
+//   length,
+//   publishDate,
+//   rating,
+//   status,
+//   tags
+// ) {
+//   this.index = index;
+//   this.imageUrl = imageUrl;
+//   this.title = title;
+//   this.author = author;
+//   this.length = length;
+//   this.publishDate = publishDate;
+//   this.rating = rating;
+//   this.status = status;
+//   this.tags = tags;
+// }
 
 let initBooks = [
   new Book(
